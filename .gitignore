@@ -1,1 +1,6 @@
 *.o
+*.vcxproj
+*.vcxproj.filters
+cg1_ex1
+*.sdf
+*.sln
