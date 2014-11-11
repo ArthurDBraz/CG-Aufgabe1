@@ -34,30 +34,36 @@ Node *buildRobot(){
   // XXX: implement more body/robot/whatever parts here
 
   // INSERT YOUR CODE HERE
+    float arm_length = 50;
+    float arm_height = 280;
+    float arm_width = 100;
+    float leg_length = 50;
+    float leg_height = 300;
+    float leg_width = 100;
 
     Node *head = new Node(0, 250 , 0,
                         120, 100, 100,
-                        0, -100, 0,
+                        0, -75, 0,
                         0, 0, 0);
 
-    Node *leftArm = new Node(200, 0, 0,
-                            100, 280, 100,
-                            150, 0 ,0,
+    Node *leftArm = new Node(175, 10, 0,
+                            arm_length, arm_height, arm_width,
+                            -50, arm_height/2 ,0,
                             0, 0, 0);
 
-    Node *rightArm = new Node(-200, 0, 0,
-                            100, 280, 100,
-                            150, 0 ,0,
+    Node *rightArm = new Node(-175, 10, 0,
+                            arm_length, arm_height, arm_width,
+                            50, arm_height/2 ,0,
                             0, 0, 0);
 
     Node *leftLeg = new Node(75, -350, 0,
-                            50, 300, 100,
-                            0, 150, 0,
+                            leg_length, leg_height, leg_width,
+                            0, leg_height/2 + 25, 0,
                             0, 0, 0);
 
     Node *rightLeg = new Node(-75, -350, 0,
-                            50, 300, 100,
-                            0, 150, 0,
+                            leg_length, leg_height, leg_width,
+                            0, leg_height/2 + 25, 0,
                             0, 0, 0);
 
   // END XXX

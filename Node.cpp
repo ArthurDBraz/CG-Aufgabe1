@@ -106,7 +106,7 @@ void Node::render(){
 
 	// INSERT YOUR CODE HERE
 
-	//glTranslatef(this->jointx,this->jointy,this->jointz);
+	glTranslatef(this->jointx,this->jointy,this->jointz);
 
 	// END XXX
 
@@ -128,6 +128,8 @@ void Node::render(){
 	// XXX
 
 	// INSERT YOUR CODE HERE
+
+    glTranslatef(-this->jointx,-this->jointy,-this->jointz);
 
 	// END XXX
 
@@ -173,6 +175,8 @@ void Node::drawJoint(){
 
 	// INSERT YOUR CODE HERE
 
+	glutWireSphere(25,8,8);
+
 	// END XXX
 
 	glBegin(GL_LINES);
@@ -181,6 +185,16 @@ void Node::drawJoint(){
 	//      SEE PROVIDED cg1_ex1.exe (win32) AND cg1_ex1 (linux)
 
 	// INSERT YOUR CODE HERE
+
+	glColor3f(1,0,0);
+	glVertex3f(40,0,0);
+	glVertex3f(0,0,0);
+	glColor3f(0,1,0);
+	glVertex3f(0,40,0);
+	glVertex3f(0,0,0);
+	glColor3f(0,0,1);
+	glVertex3f(0,0,40);
+	glVertex3f(0,0,0);
 
 	// END XXX
 
