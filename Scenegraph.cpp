@@ -151,5 +151,16 @@ void SceneGraph::reset(Node* node){
 
   // INSERT YOUR CODE HERE
 
+  node->rotx = 0;
+  node->roty = 0;
+  node->rotz = 0;
+  if(node->getChild() != NULL)
+    reset(node->getChild());
+
+  if(node->getNext() != NULL)
+    reset(node->getNext());
+
+  glutPostRedisplay();
+
   // END XXX
 }

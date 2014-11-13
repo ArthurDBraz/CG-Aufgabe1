@@ -9,14 +9,14 @@
    ------------------------------------------------------------- */
 
 #include <iostream>
-#ifdef __APPLE__ 
+#ifdef __APPLE__
 #include <GLUT/glut.h>
 #elif _WIN32
 #include "win32/glut.h"
 #else
 #include <GL/glut.h>
 #endif
- 
+
 #include <math.h>
 #include "Scenegraph.hpp"
 #include "Context.hpp"
@@ -40,7 +40,7 @@ bool Context::leftButton;
 // mouse position in previous frame
 int Context::mouseX, Context::mouseY;
 
-// set parameters to your own liking 
+// set parameters to your own liking
 // (or leave them as they are)
 
 // light and material
@@ -78,30 +78,30 @@ void Context::init(int argc, char **argv){
   glutInitWindowSize(width, height);
   glutInitWindowPosition(x, y);
   glutCreateWindow(title.c_str());
-   
+
   // light and material
   glMaterialfv(GL_FRONT, GL_AMBIENT, materialAmbient);
   glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
   glMaterialfv(GL_FRONT, GL_SHININESS, materialShininess);
   glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightModelAmbient);
-  
+
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
-  
+
   // shading
   glShadeModel(GL_FLAT);
-  
+
   // clear background to black and clear depth buffer
   glClearColor(0.0,0.0,0.0,1.0);
-  
+
   // enable depth test (z-buffer)
   glDepthFunc(GL_LESS);
   glEnable(GL_DEPTH_TEST);
-  
+
   // enable normalization of vertex normals
   glEnable(GL_NORMALIZE);
-  
+
   // initial view definitions
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -136,10 +136,10 @@ void Context::camera(void){
 
 // display callback for GLUT
 void Context::display(void){
-  
+
   // clear color and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
+
   // switch to opengl modelview matrix
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -155,13 +155,13 @@ void Context::display(void){
 
 // reshape-Callback for GLUT
 void Context::reshape(int w, int h){
-  
+
   width=w;
   height=h;
 
   // reshaped window aspect ratio
   float aspect = (float) w / (float) h;
-  
+
   // viewport
   glViewport(0,0, (GLsizei) w, (GLsizei) h);
 
@@ -176,20 +176,20 @@ void Context::reshape(int w, int h){
 
 // keyboard callback
 void Context::keyPressed(unsigned char key, int x, int y){
-	
+
   float step= 2.0;
 
-  // rotate selected node around 
+  // rotate selected node around
   // x,y and z axes with keypresses
   switch(key){
-    
+
   case 'q':
   case 'Q': exit(0);
   case 'x':
     sceneGraph->rotate(step, 0, 0);
     display();
     break;
-  case 'X': 
+  case 'X':
     sceneGraph->rotate(-step, 0, 0);
     display();
     break;
@@ -200,12 +200,12 @@ void Context::keyPressed(unsigned char key, int x, int y){
   case 'Y' :
     sceneGraph->rotate(0, -step, 0);
     display();
-    break;  
+    break;
   case 'z':
     sceneGraph->rotate(0, 0, step);
     display();
     break;
-  case 'Z': 
+  case 'Z':
     sceneGraph->rotate(0, 0, -step);
     display();
     break;
@@ -213,6 +213,11 @@ void Context::keyPressed(unsigned char key, int x, int y){
     // XXX: reset rotations
 
     // INSERT YOUR CODE HERE
+
+    case 'r':
+    case 'R':
+        sceneGraph->reset();
+        break;
 
     // END XXX
 
@@ -225,7 +230,7 @@ void Context::keyPressed(unsigned char key, int x, int y){
 // (arrow keys for node selection)
 void Context::specialKeys(int key, int x, int y){
 
-  // rotate selected node around 
+  // rotate selected node around
   // x,y and z axes with keypresses
   switch(key) {
 
@@ -261,20 +266,25 @@ void Context::specialKeys(int key, int x, int y){
 void Context::menu(int id){
 
   switch (id) {
-  case 1: 
+  case 1:
     delete sceneGraph;
     exit(0);
-  
+
     // XXX: reset rotations
 
     // INSERT YOUR CODE HERE
 
+    case 2:
+        sceneGraph->reset();
+        break;
+
+
     // END XXX
-    
+
     // XXX: add more options (optional)
-  
+
     // INSERT YOUR CODE HERE
-    
+
     // END XXX
 
   default:
@@ -296,13 +306,13 @@ void Context::mouseMoved(int x, int y){
 
 // mouse callback
 void Context::mousePressed(int button, int state, int x, int y){
-  
+
   if (button == GLUT_LEFT) {
     if (state == GLUT_UP) {
       leftButton= false;
     }
     else if (state == GLUT_DOWN) {
-      leftButton= true;  
+      leftButton= true;
       mouseX = x;
       mouseY = y;
     }
@@ -314,7 +324,7 @@ void Context::idle(void){}
 
 // register callbacks with GLUT
 void Context::registerCallbacks(void){
-  
+
   glutDisplayFunc(display);
   glutKeyboardFunc(keyPressed);
   glutSpecialFunc(specialKeys);
@@ -323,19 +333,21 @@ void Context::registerCallbacks(void){
   glutMouseFunc(mousePressed);
   glutCreateMenu(menu);
   glutAddMenuEntry("quit",1);
-  
+
   // XXX: add reset option
-  
+
   // INSERT YOUR CODE HERE
+
+  glutAddMenuEntry("reset",2);
 
   // END XXX
 
   // XXX: add more options (optional)
-  
+
   // INSERT YOUR CODE HERE
-  
+
   // END XXX
-  
+
   glutAttachMenu(GLUT_RIGHT_BUTTON);
   return;
 }
